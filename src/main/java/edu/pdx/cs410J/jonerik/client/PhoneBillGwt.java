@@ -6,12 +6,9 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.TextBox;
-import edu.pdx.cs410J.AbstractPhoneCall;
+import com.google.gwt.user.client.ui.*;
 import edu.pdx.cs410J.AbstractPhoneBill;
+import edu.pdx.cs410J.AbstractPhoneCall;
 
 import java.util.Collection;
 
@@ -44,18 +41,20 @@ public class PhoneBillGwt implements EntryPoint {
     });
 
 
-      Button button2 = new Button("Pong Server");
+      //Button button2 = new Button("Pong Server");
       VerticalPanel panel2 = new VerticalPanel();
-
-      panel2.add(addTextBox("Caller"));
-      panel2.add(addTextBox("Callee"));
-      panel2.add(addTextBox("Start Time"));
-      panel2.add(addTextBox("End Time"));
-
-      panel2.add(button2);
+      panel2.getElement().setAttribute("align", "center");
+      panel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+      //panel2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+      //panel2.add(button2);
       RootPanel rootPanel = RootPanel.get();
 
-      rootPanel.add(button);
+      //rootPanel.add(button);
+      panel2.add(addHorizontalTextBox("Enter Text", "Caller"));
+      panel2.add(addHorizontalTextBox("Enter Text", "Callee"));
+      panel2.add(addHorizontalTextBox("Enter Text", "Start Time"));
+      panel2.add(addHorizontalTextBox("Enter Text", "End Time"));
+
 
       rootPanel.add(panel2);
       //rootPanel.add(button2);
@@ -65,7 +64,22 @@ public class PhoneBillGwt implements EntryPoint {
     public static TextBox addTextBox(String text){
         TextBox textbox = new TextBox();
         textbox.setText(text);
+
+
         return textbox;
+    }
+
+    public static Label addLabel(String text) {
+        return new Label(text);
+    }
+
+    public static HorizontalPanel addHorizontalTextBox(String textBox, String labelText) {
+        HorizontalPanel panel = new HorizontalPanel();
+
+        panel.add(addLabel(labelText));
+        panel.add(addTextBox(textBox));
+        return panel;
+
     }
 
 
