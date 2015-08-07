@@ -45,32 +45,45 @@ public class PhoneBillGwt implements EntryPoint {
       VerticalPanel panel2 = new VerticalPanel();
       panel2.getElement().setAttribute("align", "center");
       panel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+      final RadioButton ampm = new RadioButton("up", "down");
+      
+
+
       //panel2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
       //panel2.add(button2);
       RootPanel rootPanel = RootPanel.get();
 
       //rootPanel.add(button);
-      panel2.add(addHorizontalTextBox("Enter Text", "Caller"));
-      panel2.add(addHorizontalTextBox("Enter Text", "Callee"));
-      panel2.add(addHorizontalTextBox("Enter Text", "Start Time"));
-      panel2.add(addHorizontalTextBox("Enter Text", "End Time"));
+      panel2.add(addHorizontalTextBox("Enter Caller Name", "Caller"));
+      panel2.add(addHorizontalTextBox("Enter Callee Name", "Callee"));
+      panel2.add(addHorizontalTextBox("Enter Date DD/MM/YYYY", "Start Time"));
+      panel2.add(addHorizontalTextBox("Enter Date DD/MM/YYYY", "End Time"));
 
-
+      panel2.add(ampm);
       rootPanel.add(panel2);
+      rootPanel.add(ampm);
       //rootPanel.add(button2);
   }
 
 
     public static TextBox addTextBox(String text){
-        TextBox textbox = new TextBox();
+        final TextBox textbox = new TextBox();
         textbox.setText(text);
+        textbox.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                textbox.setText("");
+            }
+        });
 
 
         return textbox;
     }
 
     public static Label addLabel(String text) {
-        return new Label(text);
+        Label label =  new Label(text);
+        label.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+        return label;
     }
 
     public static HorizontalPanel addHorizontalTextBox(String textBox, String labelText) {
