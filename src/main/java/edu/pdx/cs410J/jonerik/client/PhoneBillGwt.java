@@ -43,34 +43,40 @@ public class PhoneBillGwt implements EntryPoint {
 
       //Button button2 = new Button("Pong Server");
       VerticalPanel panel2 = new VerticalPanel();
+      panel2.setSpacing(10);
+      VerticalPanel panel3 = new VerticalPanel();
       panel2.getElement().setAttribute("align", "center");
-      panel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+      panel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
-
+      panel3.getElement().setAttribute("align", "center");
+      panel3.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
 
       //panel2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
       //panel2.add(button2);
       RootPanel rootPanel = RootPanel.get();
 
+      HorizontalPanel ampmStart = new HorizontalPanel();
+      HorizontalPanel ampmEnd = new HorizontalPanel();
+
       //rootPanel.add(button);
       panel2.add(addHorizontalTextBox("Enter Caller Name", "Caller"));
       panel2.add(addHorizontalTextBox("Enter Callee Name", "Callee"));
       panel2.add(addHorizontalTextBox("Enter Date DD/MM/YYYY", "Start Date"));
       panel2.add(addHorizontalTextBox("Start Time HH:MM", "Start Time"));
+      panel2.add(addAMPMButton(ampmStart));
       panel2.add(addHorizontalTextBox("Enter Date DD/MM/YYYY", "End Date"));
       panel2.add(addHorizontalTextBox("End Time HH:MM", "End Time"));
+      panel3.add(addAMPMButton(ampmEnd));
 
-      HorizontalPanel ampm = new HorizontalPanel();
-      ampm.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-      final RadioButton am = new RadioButton("up", "AM");
-      final RadioButton pm = new RadioButton("up", "PM");
 
-      ampm.add(am);
-      ampm.add(pm);
-      panel2.add(ampm);
-      
+
+
+
+
+
       rootPanel.add(panel2);
+      rootPanel.add(panel3);
       //rootPanel.add(ampm);
       //rootPanel.add(button2);
   }
@@ -98,6 +104,7 @@ public class PhoneBillGwt implements EntryPoint {
 
     public static HorizontalPanel addHorizontalTextBox(String textBox, String labelText) {
         HorizontalPanel panel = new HorizontalPanel();
+        panel.setSpacing(5);
 
         panel.add(addLabel(labelText));
         panel.add(addTextBox(textBox));
@@ -105,6 +112,14 @@ public class PhoneBillGwt implements EntryPoint {
 
     }
 
+    public static HorizontalPanel addAMPMButton(HorizontalPanel ampm) {
+        ampm.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+        final RadioButton am = new RadioButton("up", "AM");
+        final RadioButton pm = new RadioButton("up", "PM");
+        ampm.add(am);
+        ampm.add(pm);
+        return ampm;
+    }
 
 
 }
