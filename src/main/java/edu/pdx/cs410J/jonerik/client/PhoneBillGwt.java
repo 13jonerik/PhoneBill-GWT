@@ -46,7 +46,7 @@ public class PhoneBillGwt implements EntryPoint {
       panel2.getElement().setAttribute("align", "center");
       panel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
       final RadioButton ampm = new RadioButton("up", "down");
-      
+
 
 
       //panel2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
@@ -56,8 +56,10 @@ public class PhoneBillGwt implements EntryPoint {
       //rootPanel.add(button);
       panel2.add(addHorizontalTextBox("Enter Caller Name", "Caller"));
       panel2.add(addHorizontalTextBox("Enter Callee Name", "Callee"));
-      panel2.add(addHorizontalTextBox("Enter Date DD/MM/YYYY", "Start Time"));
-      panel2.add(addHorizontalTextBox("Enter Date DD/MM/YYYY", "End Time"));
+      panel2.add(addHorizontalTextBox("Enter Date DD/MM/YYYY", "Start Date"));
+      panel2.add(addHorizontalTextBox("Start Time HH:MM", "Start Time"));
+      panel2.add(addHorizontalTextBox("Enter Date DD/MM/YYYY", "End Date"));
+      panel2.add(addHorizontalTextBox("End Time HH:MM", "End Time"));
 
       panel2.add(ampm);
       rootPanel.add(panel2);
