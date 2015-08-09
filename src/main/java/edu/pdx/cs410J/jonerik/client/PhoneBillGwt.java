@@ -77,10 +77,12 @@ public class PhoneBillGwt implements EntryPoint {
       panel2.add(addHorizontalTextBox("Enter Date DD/MM/YYYY", "End Date"));
       panel2.add(addHorizontalTextBox("End Time HH:MM", "End Time"));
       panel2.add(addAMPMButtonEnd(ampmEnd));
+      panel2.add(addButton("Add Call"));
+      panel2.add(addButton("Search"));
 
 
       rootPanel.add(panel2);
-      rootPanel.add(panel3);
+      //rootPanel.add(panel3);
       //rootPanel.add(ampm);
       //rootPanel.add(button2);
   }
@@ -132,6 +134,11 @@ public class PhoneBillGwt implements EntryPoint {
         ampm.add(am);
         ampm.add(pm);
         return ampm;
+    }
+
+    public static Button addButton(String name) {
+        return new Button(name);
+
     }
 
 }
