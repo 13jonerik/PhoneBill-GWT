@@ -1,22 +1,18 @@
 package edu.pdx.cs410J.jonerik.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import edu.pdx.cs410J.AbstractPhoneBill;
-import edu.pdx.cs410J.AbstractPhoneCall;
-
-import java.util.Collection;
 
 /**
  * A basic GWT class that makes sure that we can send an Phone Bill back from the server
  */
 public class PhoneBillGwt implements EntryPoint {
   public void onModuleLoad() {
+
+      /*
     Button button = new Button("Ping Server");
     button.addClickHandler(new ClickHandler() {
         public void onClick(ClickEvent clickEvent) {
@@ -39,6 +35,8 @@ public class PhoneBillGwt implements EntryPoint {
             });
         }
     });
+        */
+
 
       VerticalPanel panel2 = new VerticalPanel();
       panel2.setSpacing(10);
@@ -50,7 +48,6 @@ public class PhoneBillGwt implements EntryPoint {
 
       HorizontalPanel ampmStart = new HorizontalPanel();
       HorizontalPanel ampmEnd = new HorizontalPanel();
-
 
       rootPanel.add(setVerticalPanel(panel2, ampmStart, ampmEnd));
 
@@ -106,8 +103,16 @@ public class PhoneBillGwt implements EntryPoint {
         return ampm;
     }
 
-    public static Button addButton(String name) {
-        return new Button(name);
+    public static Button addButton(String buttonName, final String windowAlert) {
+        Button addCall = new Button(buttonName);
+
+        addCall.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                Window.alert(windowAlert);
+            }
+        });
+        return addCall;
 
     }
 
@@ -120,8 +125,18 @@ public class PhoneBillGwt implements EntryPoint {
         panel2.add(addHorizontalTextBox("Enter Date DD/MM/YYYY", "End Date"));
         panel2.add(addHorizontalTextBox("End Time HH:MM", "End Time"));
         panel2.add(addAMPMButtonEnd(ampmEnd));
+        panel2.add(addButton("Add Call", "Call Added!"));
+        panel2.add(addButton("Search", "Searcher"));
 
+        /*
         Button addCall = new Button("Add Call");
+
+        addCall.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                Window.alert("Call Saved!");
+            }
+        });
 
         Button addSearch = new Button("Search");
         addSearch.addClickHandler(new ClickHandler() {
@@ -130,9 +145,10 @@ public class PhoneBillGwt implements EntryPoint {
                 Window.alert("Searcher");
             }
         });
+        */
 
-        panel2.add(addCall);
-        panel2.add(addSearch);
+        //panel2.add(addCall);
+        //panel2.add(addSearch);
 
         return panel2;
 
