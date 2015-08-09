@@ -59,20 +59,24 @@ public class PhoneBillGwt implements EntryPoint {
       HorizontalPanel ampmStart = new HorizontalPanel();
       HorizontalPanel ampmEnd = new HorizontalPanel();
 
+      /*
+      ampmEnd.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+      RadioButton end = new RadioButton("down", "AM");
+      RadioButton end2 = new RadioButton("down", "PM");
+      ampmEnd.add(end);
+      ampmEnd.add(end2);
+      */
+
+
       //rootPanel.add(button);
       panel2.add(addHorizontalTextBox("Enter Caller Name", "Caller"));
       panel2.add(addHorizontalTextBox("Enter Callee Name", "Callee"));
       panel2.add(addHorizontalTextBox("Enter Date DD/MM/YYYY", "Start Date"));
       panel2.add(addHorizontalTextBox("Start Time HH:MM", "Start Time"));
-      panel2.add(addAMPMButton(ampmStart));
+      panel2.add(addAMPMButtonStart(ampmStart));
       panel2.add(addHorizontalTextBox("Enter Date DD/MM/YYYY", "End Date"));
       panel2.add(addHorizontalTextBox("End Time HH:MM", "End Time"));
-      panel3.add(addAMPMButton(ampmEnd));
-
-
-
-
-
+      panel2.add(addAMPMButtonEnd(ampmEnd));
 
 
       rootPanel.add(panel2);
@@ -112,14 +116,22 @@ public class PhoneBillGwt implements EntryPoint {
 
     }
 
-    public static HorizontalPanel addAMPMButton(HorizontalPanel ampm) {
+    public static HorizontalPanel addAMPMButtonStart(HorizontalPanel ampm) {
         ampm.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-        final RadioButton am = new RadioButton("up", "AM");
-        final RadioButton pm = new RadioButton("up", "PM");
+        final RadioButton am = new RadioButton("start", "AM");
+        final RadioButton pm = new RadioButton("start", "PM");
         ampm.add(am);
         ampm.add(pm);
         return ampm;
     }
 
+    public static HorizontalPanel addAMPMButtonEnd(HorizontalPanel ampm) {
+        ampm.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+        final RadioButton am = new RadioButton("end", "AM");
+        final RadioButton pm = new RadioButton("end", "PM");
+        ampm.add(am);
+        ampm.add(pm);
+        return ampm;
+    }
 
 }
