@@ -40,53 +40,21 @@ public class PhoneBillGwt implements EntryPoint {
         }
     });
 
-
-      //Button button2 = new Button("Pong Server");
       VerticalPanel panel2 = new VerticalPanel();
       panel2.setSpacing(10);
-      VerticalPanel panel3 = new VerticalPanel();
+
       panel2.getElement().setAttribute("align", "center");
       panel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
-      //panel3.getElement().setAttribute("align", "center");
-      //panel3.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-
-
-      //panel2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-      //panel2.add(button2);
       RootPanel rootPanel = RootPanel.get();
 
       HorizontalPanel ampmStart = new HorizontalPanel();
       HorizontalPanel ampmEnd = new HorizontalPanel();
 
-      /*
-      ampmEnd.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-      RadioButton end = new RadioButton("down", "AM");
-      RadioButton end2 = new RadioButton("down", "PM");
-      ampmEnd.add(end);
-      ampmEnd.add(end2);
-      */
-
-
-      //rootPanel.add(button);
-      /*
-      panel2.add(addHorizontalTextBox("Enter Caller Name", "Caller"));
-      panel2.add(addHorizontalTextBox("Enter Callee Name", "Callee"));
-      panel2.add(addHorizontalTextBox("Enter Date DD/MM/YYYY", "Start Date"));
-      panel2.add(addHorizontalTextBox("Start Time HH:MM", "Start Time"));
-      panel2.add(addAMPMButtonStart(ampmStart));
-      panel2.add(addHorizontalTextBox("Enter Date DD/MM/YYYY", "End Date"));
-      panel2.add(addHorizontalTextBox("End Time HH:MM", "End Time"));
-      panel2.add(addAMPMButtonEnd(ampmEnd));
-      panel2.add(addButton("Add Call"));
-      panel2.add(addButton("Search"));
-      */
-
 
       rootPanel.add(setVerticalPanel(panel2, ampmStart, ampmEnd));
-      //rootPanel.add(panel3);
-      //rootPanel.add(ampm);
-      //rootPanel.add(button2);
+
+
   }
 
 
@@ -152,8 +120,20 @@ public class PhoneBillGwt implements EntryPoint {
         panel2.add(addHorizontalTextBox("Enter Date DD/MM/YYYY", "End Date"));
         panel2.add(addHorizontalTextBox("End Time HH:MM", "End Time"));
         panel2.add(addAMPMButtonEnd(ampmEnd));
-        panel2.add(addButton("Add Call"));
-        panel2.add(addButton("Search"));
+
+        Button addCall = new Button("Add Call");
+
+        Button addSearch = new Button("Search");
+        addSearch.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                Window.alert("Searcher");
+            }
+        });
+
+        panel2.add(addCall);
+        panel2.add(addSearch);
+
         return panel2;
 
     }
