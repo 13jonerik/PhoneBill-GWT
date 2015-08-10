@@ -20,10 +20,11 @@ public class PhoneBillGwt implements EntryPoint {
     private static TextBox startTime = new TextBox();
     private static TextBox endDate = new TextBox();
     private static TextBox endTime = new TextBox();
-    private static RadioButton startAM = new RadioButton("up", "AM");
-    private static RadioButton startPM = new RadioButton("up", "PM"); // finish making radio buttons global
-    private static RadioButton endAM = new RadioButton("up", "AM");
-    private static RadioButton endPM = new RadioButton("up", "PM");
+    private static ToggleButton startAM = new ToggleButton("AM", "PM");
+    //private static RadioButton startPM = new RadioButton("start", "PM"); // finish making radio buttons global
+    //private static RadioButton endAM = new RadioButton("end", "AM");
+    //private static RadioButton endPM = new RadioButton("end", "PM");
+    private static ToggleButton endAM = new ToggleButton("AM", "PM");
 
 
   public void onModuleLoad() {
@@ -70,10 +71,10 @@ public class PhoneBillGwt implements EntryPoint {
       RootPanel rootPanel = RootPanel.get();
       panel2.add(caller);
 
-      HorizontalPanel ampmStart = new HorizontalPanel();
+
       HorizontalPanel ampmEnd = new HorizontalPanel();
 
-      rootPanel.add(setVerticalPanel(panel2, ampmStart, ampmEnd));
+      rootPanel.add(setVerticalPanel(panel2));
 
   }
 
@@ -111,22 +112,25 @@ public class PhoneBillGwt implements EntryPoint {
 
     }
 
-    public static HorizontalPanel addAMPMButtonStart(HorizontalPanel ampm) {
-        ampm.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-        final RadioButton am = new RadioButton("start", "AM");
-        final RadioButton pm = new RadioButton("start", "PM");
-        ampm.add(am);
-        ampm.add(pm);
-        return ampm;
+    public static HorizontalPanel addAMPMButtonStart() {
+        HorizontalPanel ampmStart = new HorizontalPanel();
+        ampmStart.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+        //final RadioButton am = new RadioButton("start", "AM");
+        //final RadioButton pm = new RadioButton("start", "PM");
+
+        ampmStart.add(startAM);
+        //ampm.add(endAM);
+        return ampmStart;
     }
 
-    public static HorizontalPanel addAMPMButtonEnd(HorizontalPanel ampm) {
-        ampm.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-        final RadioButton am = new RadioButton("end", "AM");
-        final RadioButton pm = new RadioButton("end", "PM");
-        ampm.add(am);
-        ampm.add(pm);
-        return ampm;
+    public static HorizontalPanel addAMPMButtonEnd() {
+        HorizontalPanel ampmEnd = new HorizontalPanel();
+        ampmEnd.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+        //final RadioButton am = new RadioButton("end", "AM");
+        //final RadioButton pm = new RadioButton("end", "PM");
+        //ampm.add(startAM);
+        ampmEnd.add(endAM);
+        return ampmEnd;
     }
 
     public static Button addCallButton(String buttonName, final String windowAlert) {
@@ -148,10 +152,10 @@ public class PhoneBillGwt implements EntryPoint {
                 String startAmPm;
                 String endAmPm;
 
-                if(startAM.isEnabled()) { startAmPm = "AM"; }
-                else { startAmPm = "PM"; }
-                if(startAM.isEnabled()) { endAmPm = "AM"; }
-                else { endAmPm = "PM"; }
+                if(startAM.isDown()) { startAmPm = "PM"; }
+                else { startAmPm = "AM"; }
+                if(endAM.isDown()) { endAmPm = "PM"; }
+                else { endAmPm = "AM"; }
 
 
                 StringBuilder sb = new StringBuilder();
@@ -186,15 +190,15 @@ public class PhoneBillGwt implements EntryPoint {
 
     }
 
-    public static VerticalPanel setVerticalPanel(VerticalPanel panel2, HorizontalPanel ampmStart, HorizontalPanel ampmEnd){
+    public static VerticalPanel setVerticalPanel(VerticalPanel panel2){
         panel2.add(addHorizontalTextBox(caller, "Caller"));
         panel2.add(addHorizontalTextBox(callee, "Callee"));
         panel2.add(addHorizontalTextBox(startDate, "Start Date"));
         panel2.add(addHorizontalTextBox(startTime, "Start Time"));
-        panel2.add(addAMPMButtonStart(ampmStart));
+        panel2.add(addAMPMButtonStart());
         panel2.add(addHorizontalTextBox(endDate, "End Date"));
         panel2.add(addHorizontalTextBox(endTime, "End Time"));
-        panel2.add(addAMPMButtonEnd(ampmEnd));
+        panel2.add(addAMPMButtonEnd());
         panel2.add(addCallButton("Add Call", "Call Added!"));
         panel2.add(addSearchButton("Search", "Searcher"));
 
