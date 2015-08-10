@@ -13,16 +13,28 @@ import com.google.gwt.dom.client.Element;
  */
 public class PhoneBillGwt implements EntryPoint {
 
+    private static TextBox customerName = new TextBox();
     private static TextBox caller = new TextBox();
     private static TextBox callee = new TextBox();
     private static TextBox startDate = new TextBox();
     private static TextBox startTime = new TextBox();
     private static TextBox endDate = new TextBox();
     private static TextBox endTime = new TextBox();
+    private static RadioButton startAM = new RadioButton("up", "AM");
+    private static RadioButton startPM = new RadioButton("up", "PM"); // finish making radio buttons global
+    private static RadioButton endAM = new RadioButton("up", "AM");
+    private static RadioButton endPM = new RadioButton("up", "PM");
+
 
   public void onModuleLoad() {
 
-
+      addTextBox(customerName, "Name on Phone Bill");
+      addTextBox(caller, "Enter Caller Name");
+      addTextBox(callee, "Enter Callee Name");
+      addTextBox(startDate, "DD/MM/YYYY");
+      addTextBox(endDate, "DD/MM/YYYY");
+      addTextBox(startTime, "HH:MM");
+      addTextBox(endTime, "HH:MM");
 
       /*
     Button button = new Button("Ping Server");
@@ -49,7 +61,6 @@ public class PhoneBillGwt implements EntryPoint {
     });
         */
 
-
       VerticalPanel panel2 = new VerticalPanel();
       panel2.setSpacing(10);
 
@@ -63,7 +74,6 @@ public class PhoneBillGwt implements EntryPoint {
       HorizontalPanel ampmEnd = new HorizontalPanel();
 
       rootPanel.add(setVerticalPanel(panel2, ampmStart, ampmEnd));
-
 
   }
 
@@ -91,10 +101,12 @@ public class PhoneBillGwt implements EntryPoint {
 
     public static HorizontalPanel addHorizontalTextBox(TextBox box, String labelText) {
         HorizontalPanel panel = new HorizontalPanel();
+        DialogBox help = new DialogBox();
         panel.setSpacing(5);
 
         panel.add(addLabel(labelText));
         panel.add(box);
+        panel.add(help);
         return panel;
 
     }
@@ -123,22 +135,33 @@ public class PhoneBillGwt implements EntryPoint {
         addCall.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
+
+
+                //validate the arguments, throw errors if not valid
+                String customerNameInput    = customerName.getText();
+                String callerInput          = caller.getText();
+                String calleeIput           = callee.getText();
+                String startDateInput       = startDate.getText();
+                String endDateInput         = endDate.getText();
+                String startTimeInput       = startTime.getText();
+                String endTimeInput         = endTime.getText();
+                String startAmPm;
+                String endAmPm;
+
+                if(startAM.isEnabled()) { startAmPm = "AM"; }
+                else { startAmPm = "PM"; }
+                if(startAM.isEnabled()) { endAmPm = "AM"; }
+                else { endAmPm = "PM"; }
+
+
                 StringBuilder sb = new StringBuilder();
-                sb.append("Call Info: " + "\n");
-                sb.append("\n");
-                sb.append(caller.getText());
-                sb.append("\n");
-                sb.append(callee.getText());
-                sb.append("\n");
-                sb.append(startDate.getText());
-                sb.append("\n");
-                sb.append(startTime.getText());
-                sb.append("\n");
-                sb.append(endDate.getText());
-                sb.append("\n");
-                sb.append(endTime.getText());
-                sb.append("\n");
-                sb.append("\nCall Added!");
+                sb.append("Call Info: " + "\n\n");
+                sb.append(customerNameInput + "\n");
+                sb.append(caller.getText() + "\n");
+                sb.append(callee.getText() + "\n");
+                sb.append(startDate.getText() + " " + startTime.getText() + " " + startAmPm + "\n");
+                sb.append(endDate.getText() + " " + endTime.getText() + " " + endAmPm);
+                sb.append("\n\nCall Added!");
 
                 Window.alert(sb.toString());
             }
