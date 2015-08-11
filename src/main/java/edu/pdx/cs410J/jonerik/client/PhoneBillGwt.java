@@ -74,7 +74,9 @@ public class PhoneBillGwt implements EntryPoint {
       RootPanel rootPanel = RootPanel.get();
       panel2.add(caller);
 
+
       rootPanel.get("gwtcontainer").add(setVerticalPanel(panel2));
+
 
   }
 
