@@ -1,14 +1,60 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 
 <head>
-  <title>A Phone Bill in GWT</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script language="javascript" src="phonebill/phonebill.nocache.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="/client/bootstrap.css">
+    <style type="text/css"></style>
 </head>
 <body>
-  <script language="javascript" src="phonebill/phonebill.nocache.js" type="text/javascript"></script>
 
-  <h2 align="center">Phone Bill Gui: <small>a mini phone bill builder</small></h2>
+  <title>Phone Bill Gui</title>
+  <div class="jumbotron">
+      <h1 align="center">Phone Bill Gui: <small>a mini phone bill builder</small></h1>
+  </div>
 
-</body>
+  <!-- Side Panel -->
+  <div class="row widget">
+      <div class="page-title" align="center">
+          <h4>Welcome to the Phone Bill Application!</h4>
+          <p>Developed by Jon-Erik for CS410J-Advanced Java Project 5</p>
+      </div>
+  </div>
+
+  <!-- Fixed navbar -->
+  <div class="navbar navbar-inverse navbar-fixed-top headroom" >
+  </div>
+
+  <div class="container">
+      <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#home">Add A Phone Call</a></li>
+          <li><a data-toggle="tab" href="#menu1">README</a></li>
+          <li><a data-toggle="tab" href="#menu2">Help</a></li>
+      </ul>
+
+      <div class="tab-content">
+          <div id="home" class="tab-pane fade in active">
+              <h2 align="center">Try adding a phone call!</h2>
+              <br>
+              <div id="gwtcontainer"></div>
+          </div>
+
+          <div id="menu1" class="tab-pane fade in active">
+              <h3 align="center">README</h3>
+          </div>
+
+
+          <div id="menu2" class="tab-pane fade in active">
+              <h3 align="center">Help</h3>
+          </div>
+
+
+     </div>
+  </div>
+  </body>
 </html>

@@ -7,6 +7,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.core.client.GWT;
 
 /**
  * A basic GWT class that makes sure that we can send an Phone Bill back from the server
@@ -37,6 +39,7 @@ public class PhoneBillGwt implements EntryPoint {
       addTextBox(startTime, "HH:MM");
       addTextBox(endTime, "HH:MM");
 
+
       /*
     Button button = new Button("Ping Server");
     button.addClickHandler(new ClickHandler() {
@@ -63,18 +66,15 @@ public class PhoneBillGwt implements EntryPoint {
         */
 
       VerticalPanel panel2 = new VerticalPanel();
-      panel2.setSpacing(10);
-
+      //panel2.setSpacing(10);
+      panel2.getElement().setAttribute("padding", "10");
       panel2.getElement().setAttribute("align", "center");
       panel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
       RootPanel rootPanel = RootPanel.get();
       panel2.add(caller);
 
-
-      //HorizontalPanel ampmEnd = new HorizontalPanel();
-
-      rootPanel.add(setVerticalPanel(panel2));
+      rootPanel.get("gwtcontainer").add(setVerticalPanel(panel2));
 
   }
 
@@ -88,8 +88,6 @@ public class PhoneBillGwt implements EntryPoint {
                 textbox.setText("");
             }
         });
-
-
 
         return textbox;
     }
@@ -112,24 +110,39 @@ public class PhoneBillGwt implements EntryPoint {
 
     }
 
+    public static HorizontalPanel addHorizontalTimeTextBox(TextBox box, String labelText, ToggleButton ampm) {
+        HorizontalPanel panel = new HorizontalPanel();
+        DialogBox help = new DialogBox();
+        panel.setSpacing(5);
+
+        panel.add(addLabel(labelText));
+        panel.add(box);
+        panel.add(ampm);
+        panel.add(help);
+        return panel;
+
+    }
+
+    public static DialogBox helpButton (String whichHelp) {
+        DialogBox help = new DialogBox(true);
+        help.setText("Hello");
+        return help;
+    }
+
+
     public static HorizontalPanel addAMPMButtonStart() {
         HorizontalPanel ampmStart = new HorizontalPanel();
         ampmStart.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-        //final RadioButton am = new RadioButton("start", "AM");
-        //final RadioButton pm = new RadioButton("start", "PM");
-
         ampmStart.add(startAM);
-        //ampm.add(endAM);
+
         return ampmStart;
     }
 
     public static HorizontalPanel addAMPMButtonEnd() {
         HorizontalPanel ampmEnd = new HorizontalPanel();
         ampmEnd.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-        //final RadioButton am = new RadioButton("end", "AM");
-        //final RadioButton pm = new RadioButton("end", "PM");
-        //ampm.add(startAM);
         ampmEnd.add(endAM);
+
         return ampmEnd;
     }
 
@@ -141,7 +154,7 @@ public class PhoneBillGwt implements EntryPoint {
             @Override
             public void onClick(ClickEvent clickEvent) {
 
-                String customerNameInput = customerName.getText();
+                final String customerNameInput = customerName.getText();
                 String callerInput = caller.getText();
                 String calleeInput = callee.getText();
                 String startDateInput = startDate.getText();
@@ -163,6 +176,9 @@ public class PhoneBillGwt implements EntryPoint {
                     endAmPm = "AM";
                 }
 
+                final String start = startAmPm;
+                final String end = endAmPm;
+
                 /*
                 ArrayList<String> inputs = new ArrayList<>();
                 inputs.add(customerNameInput);
@@ -175,31 +191,41 @@ public class PhoneBillGwt implements EntryPoint {
                 String startTimeString = startDateInput + " " + startTimeInput + " " + startAmPm;
                 String endTimeString = endDateInput + " " + endTimeInput + " " + endAmPm;
 
-                boolean checkArgs = validateCall(customerNameInput, callerInput, calleeInput, startTimeString, endTimeString);
+
+                PingServiceAsync pinger = GWT.create(PingService.class);
+                boolean checkArgs = validateCall(customerNameInput, callerInput, calleeInput,
+                        startDateInput, startTimeInput, endDateInput, endTimeInput);
                 //boolean checkArgs = false;
 
-                if (checkArgs) {    // need to change this around TODO
+                if (checkArgs) {
+                    PhoneCall addCall = new PhoneCall(callerInput, calleeInput, startTimeString, endTimeString);
+                    pinger.ping(customerNameInput, addCall, new AsyncCallback<Void>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            Window.alert("Error is saving flight! Try again: " + throwable.getMessage());
+                        }
 
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("Call Info: " + "\n\n");
-                    sb.append(customerNameInput + "\n");
-                    sb.append(caller.getText() + "\n");
-                    sb.append(callee.getText() + "\n");
-                    sb.append(startDate.getText() + " " + startTime.getText() + " " + startAmPm + "\n");
-                    sb.append(endDate.getText() + " " + endTime.getText() + " " + endAmPm);
-                    sb.append("\n\nCall Added!");
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            StringBuilder sb = new StringBuilder();
+                            sb.append("Call Info: " + "\n\n");
+                            sb.append(customerName.getText() + "\n");
+                            sb.append(caller.getText() + "\n");
+                            sb.append(callee.getText() + "\n");
+                            sb.append(startDate.getText() + " " + startTime.getText() + " " + start + "\n");
+                            sb.append(endDate.getText() + " " + endTime.getText() + " " + end);
+                            sb.append("\n\nCall Added!");
 
-                    Window.alert(sb.toString());
+                            Window.alert(sb.toString());
 
-                } else {
-                    Window.alert("Args Invalid"); // make more specific
+                        }
+                    });
+
                 }
             }
         });
 
-
         return addCall;
-
     }
 
     public static Button addSearchButton(String buttonName, final String windowAlert) {
@@ -216,39 +242,58 @@ public class PhoneBillGwt implements EntryPoint {
     }
 
     public static VerticalPanel setVerticalPanel(VerticalPanel panel2){
+        panel2.setSpacing(10);
         panel2.add(addHorizontalTextBox(customerName, "Customer Name"));
         panel2.add(addHorizontalTextBox(caller, "Caller"));
         panel2.add(addHorizontalTextBox(callee, "Callee"));
         panel2.add(addHorizontalTextBox(startDate, "Start Date"));
-        panel2.add(addHorizontalTextBox(startTime, "Start Time"));
-        panel2.add(addAMPMButtonStart());
+        panel2.add(addHorizontalTimeTextBox(startTime, "Start Time", startAM));
         panel2.add(addHorizontalTextBox(endDate, "End Date"));
-        panel2.add(addHorizontalTextBox(endTime, "End Time"));
-        panel2.add(addAMPMButtonEnd());
+        panel2.add(addHorizontalTimeTextBox(endTime, "End Time", endAM));
         panel2.add(addCallButton("Add Call"));
         panel2.add(addSearchButton("Search", "Searcher"));
 
-
         return panel2;
-
     }
 
-    public static boolean validateCall(String customer, String callerNumber, String calleeNumber, String startTime, String endTime) {
+    public static boolean validateCall(String customer, String callerNumber, String calleeNumber,
+                                       String startDate, String startTime, String endDate, String endTime) {
 
+        boolean check = true;
+        StringBuilder sb = new StringBuilder();
 
         if (!customer.matches("[a-zA-Z\\s*' - - ! @ # $ % ^ & * ? 1 2 3 4 5 6 7 8 9 0 , .]+")) {
-            return false;
-        } else if (!callerNumber.matches("[0-9]{3}[-][0-9]{3}[-][0-9]{4}")) {
-            return false;
-        } else if (!calleeNumber.matches("[0-9]{3}[-][0-9]{3}[-][0-9]{4}")) {
-            return false;
-        } else if (!startTime.matches("(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/[0-9]{2}([0-9]{2})?[\\s*][0-9][0-2]{0,1}[:][0-5][0-9][\\s*]((A|a|P|p))(M|m)")) {
-            return false;
-        } else if (!endTime.matches("(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/[0-9]{2}([0-9]{2})?[\\s*][0-9][0-2]{0,1}[:][0-5][0-9][\\s*]((A|a|P|p))(M|m)")) {
-            return false;
+            sb.append("Invalid Customer Name!\n");
+            check = false;
+        }
+        if (!callerNumber.matches("[0-9]{3}[-][0-9]{3}[-][0-9]{4}")) {
+            sb.append("Invalid Caller Number! Be sure to format XXX-XXX-XXXX\n");
+            check = false;
+        }
+        if (!calleeNumber.matches("[0-9]{3}[-][0-9]{3}[-][0-9]{4}")) {
+            sb.append("Invalid Callee Number! Be sure to format XXX-XXX-XXXX\n");
+            check = false;
+        }
+        if (!startDate.matches("(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/[0-9]{2}([0-9]{2})")) {
+            sb.append("Invalid Start Date! Be sure to format the start date MM/DD/YYYY\n");
+            check = false;
+        }
+        if (!startTime.matches("[0-9][0-2]{0,1}[:][0-5][0-9]")) {
+            sb.append("Invalid Start Time! Be sure to format the start time h:mm\n");
+            check = false;
+        }
+        if (!endDate.matches("(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/[0-9]{2}([0-9]{2})")) {
+            sb.append("Invalid End Date! Be sure to format the end date MM/DD/YYYY\n");
+            check = false;
+        }
+        if (!endTime.matches("[0-9][0-2]{0,1}[:][0-5][0-9]")) {
+            sb.append("Invalid End Time! Be sure to format the end time h:mm\n");
+            check = false;
         }
 
-        return true;
+        if (!check) { Window.alert(sb.toString()); }
+
+        return check;
     }
 
     public static TextBox getUserInput(String box) {

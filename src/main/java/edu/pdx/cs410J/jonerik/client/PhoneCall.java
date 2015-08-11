@@ -1,7 +1,7 @@
 package edu.pdx.cs410J.jonerik.client;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import edu.pdx.cs410J.AbstractPhoneCall;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
 
 /**
@@ -30,8 +30,8 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
     this.callerNumber = callerNumber;
     this.calleeNumber = calleeNumber;
 
-    this.startTime = formatDate(callTime);
-    this.endTime = formatDate(endTime);
+    this.startTime    = formatDate(callTime);
+    this.endTime      = formatDate(endTime);
 
   }
 
@@ -47,17 +47,19 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
     return startTime;
   }
 
+
   public String getStartTimeString() {
-    DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+    DateTimeFormat formatter = DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_MEDIUM);
     return formatter.format(startTime);
   }
 
+  @Override
   public Date getEndTime() {
     return endTime;
   }
 
   public String getEndTimeString() {
-    DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+    DateTimeFormat formatter = DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_MEDIUM);
     return formatter.format(endTime);
   }
 
@@ -80,13 +82,14 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
   public static Date formatDate(String d) {
 
     try {
-      SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-      Date date = formatter.parse(d);
-      return date;
+      String format = "MM/dd/yyyy h:mm a";
+      DateTimeFormat date = DateTimeFormat.getFormat(format);
+      return date.parse(d);
 
-    } catch (java.text.ParseException e) {
-      System.err.println("Date Malformatted. Check file and arguments and try again.");
-      System.exit(1);
+    } catch (Throwable e) {
+      //System.err.println("Date Malformatted. Check file and arguments and try again.");
+      //System.exit(1);
+      e.getMessage();
     }
     return null;
   }

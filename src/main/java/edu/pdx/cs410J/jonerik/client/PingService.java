@@ -2,7 +2,8 @@ package edu.pdx.cs410J.jonerik.client;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import edu.pdx.cs410J.AbstractPhoneBill;
+
+import java.util.Map;
 
 /**
  * A GWT remote service that returns a dummy Phone Bill
@@ -10,9 +11,14 @@ import edu.pdx.cs410J.AbstractPhoneBill;
 @RemoteServiceRelativePath("ping")
 public interface PingService extends RemoteService {
 
+  public Map<String, PhoneBill> getBills();
+
   /**
    * Returns the a dummy Phone Bill
    */
-  public AbstractPhoneBill ping();
+  void ping(String customer, PhoneCall call);
+
+
+
 
 }
