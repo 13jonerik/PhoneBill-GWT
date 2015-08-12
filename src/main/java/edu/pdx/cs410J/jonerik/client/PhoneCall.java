@@ -35,6 +35,15 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
 
   }
 
+  public PhoneCall( String callTime, String endTime) {
+
+    this.callerNumber = null;
+    this.calleeNumber = null;
+    this.startTime    = formatDate(callTime);
+    this.endTime      = formatDate(endTime);
+
+  }
+
   public String getCaller() {
     return callerNumber;
   }
@@ -119,5 +128,6 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
     return 0;
 
   }
+
 
 }

@@ -8,7 +8,6 @@ import edu.pdx.cs410J.jonerik.client.PingService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
 
 /**
  * The server-side implementation of the Phone Bill service
@@ -25,8 +24,11 @@ public class PingServiceImpl extends RemoteServiceServlet implements PingService
 
   public void ping(String customer, PhoneCall call) {
     if (bills.containsKey(customer)){
-      PhoneBill thisBill = bills.get(customer);
 
+      PhoneBill thisBill = bills.get(customer);
+      thisBill.addPhoneCall(call);
+
+      /*
       List<PhoneCall> remove = new ArrayList<>();
       for (PhoneCall check : remove) {
         remove.add(check);
@@ -38,7 +40,7 @@ public class PingServiceImpl extends RemoteServiceServlet implements PingService
       for (PhoneCall add : remove) {
         thisBill.addPhoneCall(add);
       }
-
+      */
     } else {
       PhoneBill phonebill = new PhoneBill();
       phonebill.addPhoneCall(call);
