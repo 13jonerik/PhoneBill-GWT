@@ -237,19 +237,30 @@ public class PhoneBillGwt implements EntryPoint {
                         @Override
                         public void onSuccess(Map<String, PhoneBill> stringPhoneBillMap) {
                             PhoneBill bill = stringPhoneBillMap.get(customerNameInput);
+
+                            if (bill == null) {
+                                Window.alert("No calls found for that customer name. Try adding a call!");
+                                return;
+                            }
+
                             List<AbstractPhoneCall> calls;
                             calls = bill.getPhoneCalls();
                             StringBuilder sb = new StringBuilder();
+                            sb.append("Here are the calls that fall within your search criteria:\n\n");
+                            boolean valid;
+                            boolean any = false;
+
                             for (AbstractPhoneCall each : calls) {
                                 Date start = searchCall.getStartTime();
                                 Date end = searchCall.getEndTime();
-                                boolean valid;
                                 valid = searcher(each, start, end);
                                 if (valid) {
+                                    any = true;
                                     sb.append(each.toString() + "\n\n");
                                 }
                             }
-                            Window.alert(sb.toString());
+                            if (!any) { Window.alert("No calls found in your search criteria!"); }
+                            else { Window.alert(sb.toString()); }
                         }
                     });
 
@@ -275,10 +286,28 @@ public class PhoneBillGwt implements EntryPoint {
 
                     @Override
                     public void onSuccess(Map<String, PhoneBill> stringPhoneBillMap) {
+                        if (customerNameInput.equals("")) {
+                            Window.alert("Enter a customer name!");
+                            return;
+                        }
+
                         PhoneBill bill = stringPhoneBillMap.get(customerNameInput);
-                        if(bill == null) { Window.alert("Phone bill for this customer not found! Try adding a new call."); }
-                        Prettify pretty = new Prettify();
-                        Window.alert(pretty.dumpToWindow(bill));
+
+                        if(bill == null) {
+                            Window.alert("Phone bill for this customer not found! Try adding a new call.");
+                            return;
+                        }
+
+                        List<AbstractPhoneCall> calls;
+                        calls = bill.getPhoneCalls();
+                        StringBuilder sb = new StringBuilder();
+                        sb.append("Here are all of the calls on this customer's bill: \n\n");
+
+                        for (AbstractPhoneCall each : calls) {
+                                sb.append(each.toString() + "\n\n");
+
+                        }
+                        Window.alert(sb.toString());
                     }
                 });
 
@@ -341,7 +370,7 @@ public class PhoneBillGwt implements EntryPoint {
             sb.append("Invalid Start Date! Be sure to format the start date MM/DD/YYYY\n");
             check = false;
         }
-        if (!startTime.matches("[0-9][0-2]{0,1}[:][0-5][0-9]")) {
+        if (!startTime.matches("([0-9]|1[012]):[0-5][0-9]")) {
             sb.append("Invalid Start Time! Be sure to format the start time h:mm\n");
             check = false;
         }
@@ -349,7 +378,7 @@ public class PhoneBillGwt implements EntryPoint {
             sb.append("Invalid End Date! Be sure to format the end date MM/DD/YYYY\n");
             check = false;
         }
-        if (!endTime.matches("[0-9][0-2]{0,1}[:][0-5][0-9]")) {
+        if (!endTime.matches("([0-9]|1[012]):[0-5][0-9]")) {
             sb.append("Invalid End Time! Be sure to format the end time h:mm\n");
             check = false;
         }
@@ -372,7 +401,7 @@ public class PhoneBillGwt implements EntryPoint {
             sb.append("Invalid Start Date! Be sure to format the start date MM/DD/YYYY\n");
             check = false;
         }
-        if (!startTime.matches("[0-9][0-2]{0,1}[:][0-5][0-9]")) {
+        if (!startTime.matches("([0-9]|1[012]):[0-5][0-9]")) {
             sb.append("Invalid Start Time! Be sure to format the start time h:mm\n");
             check = false;
         }
@@ -380,7 +409,7 @@ public class PhoneBillGwt implements EntryPoint {
             sb.append("Invalid End Date! Be sure to format the end date MM/DD/YYYY\n");
             check = false;
         }
-        if (!endTime.matches("[0-9][0-2]{0,1}[:][0-5][0-9]")) {
+        if (!endTime.matches("([0-9]|1[012]):[0-5][0-9]")) {
             sb.append("Invalid End Time! Be sure to format the end time h:mm\n");
             check = false;
         }
