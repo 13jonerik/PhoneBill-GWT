@@ -19,25 +19,27 @@ import java.util.Map;
  */
 public class PhoneBillGwt implements EntryPoint {
 
-    private static TextBox customerName = new TextBox();
-    private static TextBox caller = new TextBox();
-    private static TextBox callee = new TextBox();
-    private static TextBox startDate = new TextBox();
-    private static TextBox startTime = new TextBox();
-    private static TextBox endDate = new TextBox();
-    private static TextBox endTime = new TextBox();
+    private static TextBox customerName     = new TextBox();
+    private static TextBox caller           = new TextBox();
+    private static TextBox callee           = new TextBox();
+    private static TextBox startDate        = new TextBox();
+    private static TextBox startTime        = new TextBox();
+    private static TextBox endDate          = new TextBox();
+    private static TextBox endTime          = new TextBox();
 
-    private static TextBox searchCustomer = new TextBox();
-    private static TextBox searchStartDate = new TextBox();
-    private static TextBox searchStartTime = new TextBox();
-    private static TextBox searchEndDate = new TextBox();
-    private static TextBox searchEndTime = new TextBox();
+    private static TextBox searchCustomer   = new TextBox();
+    private static TextBox searchStartDate  = new TextBox();
+    private static TextBox searchStartTime  = new TextBox();
+    private static TextBox searchEndDate    = new TextBox();
+    private static TextBox searchEndTime    = new TextBox();
 
-    private static ToggleButton startAM = new ToggleButton("AM", "PM");
-    private static ToggleButton endAM = new ToggleButton("AM", "PM");
+    private static ToggleButton startAM     = new ToggleButton("AM", "PM");
+    private static ToggleButton endAM       = new ToggleButton("AM", "PM");
 
     private static ToggleButton searchStartAM = new ToggleButton("AM", "PM");
-    private static ToggleButton searchEndAM = new ToggleButton("AM", "PM");
+    private static ToggleButton searchEndAM   = new ToggleButton("AM", "PM");
+
+    private static TextBox prettyCustomer   = new TextBox();
     static PingServiceAsync pinger;
 
   public void onModuleLoad() {
@@ -56,22 +58,29 @@ public class PhoneBillGwt implements EntryPoint {
       addTextBox(searchStartTime, "HH:MM");
       addTextBox(searchEndTime, "HH:MM");
 
+      addTextBox(prettyCustomer, "Name of Customer");
+
       pinger = GWT.create(PingService.class);
 
       VerticalPanel panel2      = new VerticalPanel();
       VerticalPanel panel3      = new VerticalPanel();
+      VerticalPanel panel4      = new VerticalPanel();
 
       panel2.getElement().setAttribute("align", "center");
       panel3.getElement().setAttribute("align", "center");
+      panel4.getElement().setAttribute("align", "center");
 
       panel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
       panel3.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+      panel4.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
-      RootPanel rootPanel = RootPanel.get("gwtcontainer");
-      RootPanel rootPanel2 = RootPanel.get("search");
+      RootPanel rootPanel   = RootPanel.get("gwtcontainer");
+      RootPanel rootPanel2  = RootPanel.get("search");
+      RootPanel rootPanel3  = RootPanel.get("pretty");
 
       rootPanel.add(setVerticalPanel(panel2));
       rootPanel2.add(setSearchPanel(panel3));
+      rootPanel3.add(setPrettyPanel(panel4));
 
   }
 
@@ -251,6 +260,34 @@ public class PhoneBillGwt implements EntryPoint {
         return searchCall;
     }
 
+    public static Button addPrettyButton(String buttonName){
+        Button prettyButton = new Button(buttonName);
+        prettyButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                final String customerNameInput = prettyCustomer.getText();
+                pinger.getBills(new AsyncCallback<Map<String, PhoneBill>>(){
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Window.alert("Error in loading phone bills. Reload page and try again.");
+                    }
+
+                    @Override
+                    public void onSuccess(Map<String, PhoneBill> stringPhoneBillMap) {
+                        PhoneBill bill = stringPhoneBillMap.get(customerNameInput);
+                        if(bill == null) { Window.alert("Phone bill for this customer not found! Try adding a new call."); }
+                        Prettify pretty = new Prettify();
+                        Window.alert(pretty.dumpToWindow(bill));
+                    }
+                });
+
+            }
+        });
+
+        return prettyButton;
+    }
+
     public static VerticalPanel setVerticalPanel(VerticalPanel panel2){
         panel2.setSpacing(10);
         panel2.add(addHorizontalTextBox(customerName, "Customer Name"));
@@ -273,6 +310,13 @@ public class PhoneBillGwt implements EntryPoint {
         panel2.add(addHorizontalTimeTextBox(searchEndTime, "End Time", searchEndAM));
         panel2.add(addSearchButton("Search"));
         return panel2;
+    }
+
+    public static VerticalPanel setPrettyPanel(VerticalPanel panel4) {
+        panel4.setSpacing(10);
+        panel4.add(addHorizontalTextBox(prettyCustomer, "Customer Name"));
+        panel4.add(addPrettyButton("Prettify"));
+        return panel4;
     }
 
     public static boolean validateCall(String customer, String callerNumber, String calleeNumber,

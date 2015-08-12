@@ -21,7 +21,7 @@
   <div class="row widget">
       <div class="page-title" align="center">
           <h3>Welcome to the Phone Bill Application!</h3>
-          <p>Developed by Jon-Erik for CS410J-Advanced Java Project 5</p>
+          <p>Developed by Jon-Erik for CS410J-Advanced Java Project 5</p><br>
       </div>
   </div>
 
@@ -34,24 +34,25 @@
       <ul class="nav nav-tabs">
           <li class="active"><a data-toggle="tab" href="#home">Add Phone Call</a></li>
           <li><a data-toggle="tab" href="#menu1">Search</a></li>
-          <li><a data-toggle="tab" href="#menu2">README</a></li>
-          <li><a data-toggle="tab" href="#menu3">Help</a></li>
+          <li><a data-toggle="tab" href="#menu2">Prettify</a></li>
+          <li><a data-toggle="tab" href="#menu3">README</a></li>
+          <li><a data-toggle="tab" href="#menu4">Help</a></li>
       </ul>
 
       <div class="tab-content">
           <div id="home" class="tab-pane fade in active">
-              <br>
+              <header class="page-header">
               <h3 align="center">Add a phone call!</h3>
-              <br>
+              </header>
               <div id="gwtcontainer"></div>
               <br>
               <br>
           </div>
 
           <div id="menu1" class="tab-pane fade">
-              <br>
+              <header class="page-header">
               <h3 align="center">Search for calls!</h3>
-              <br>
+              </header>
               <div id="search"></div>
               <br>
               <br>
@@ -59,9 +60,18 @@
 
           <div id="menu2" class="tab-pane fade">
               <header class="page-header">
+              <h3 align="center">Pretty Print Your Phone Bill</h3>
+              </header>
+              <div id="pretty"></div>
+              <br>
+              <br>
+          </div>
+
+          <div id="menu3" class="tab-pane fade">
+              <header class="page-header">
                   <h1 class="page-title" align="center">README</h1>
               </header>
-              <br>
+
               <p align="center">
 
                   Phone Bill Application version 5.0
@@ -89,13 +99,12 @@
           </div>
 
 
-          <div id="menu3" class="tab-pane fade">
+          <div id="menu4" class="tab-pane fade">
               <header class="page-header">
                   <h1 class="page-title" align="center">Help</h1>
+                  <p align="center"><strong>Need help using this GUI? You've come to the right place...</strong></p>
               </header>
-              <br>
-              <p><strong>Need help using this GUI? You've come to the right place...</strong></p>
-              <br>
+
               <h3>Adding a phone call:</h3>
               <p>Customer name - Any string of characters, as long as it's not empty<br>
                Caller number - The number that the call came from, in XXX-XXX-XXXX format, ex 645-432-2343<br>
