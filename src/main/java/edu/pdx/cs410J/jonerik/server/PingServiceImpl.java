@@ -5,7 +5,6 @@ import edu.pdx.cs410J.jonerik.client.PhoneBill;
 import edu.pdx.cs410J.jonerik.client.PhoneCall;
 import edu.pdx.cs410J.jonerik.client.PingService;
 
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

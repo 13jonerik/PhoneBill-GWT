@@ -9,6 +9,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 
 /**
  * A basic GWT class that makes sure that we can send an Phone Bill back from the server
@@ -22,10 +23,14 @@ public class PhoneBillGwt implements EntryPoint {
     private static TextBox startTime = new TextBox();
     private static TextBox endDate = new TextBox();
     private static TextBox endTime = new TextBox();
+
+    private static TextBox searchCustomer = new TextBox();
+    private static TextBox searchStartDate = new TextBox();
+    private static TextBox searchStartTime = new TextBox();
+    private static TextBox searchEndDate = new TextBox();
+    private static TextBox searchEndTime = new TextBox();
+
     private static ToggleButton startAM = new ToggleButton("AM", "PM");
-    //private static RadioButton startPM = new RadioButton("start", "PM"); // finish making radio buttons global
-    //private static RadioButton endAM = new RadioButton("end", "AM");
-    //private static RadioButton endPM = new RadioButton("end", "PM");
     private static ToggleButton endAM = new ToggleButton("AM", "PM");
 
 
@@ -40,49 +45,33 @@ public class PhoneBillGwt implements EntryPoint {
       addTextBox(endTime, "HH:MM");
 
 
-      /*
-    Button button = new Button("Ping Server");
-    button.addClickHandler(new ClickHandler() {
-        public void onClick(ClickEvent clickEvent) {
-            PingServiceAsync async = GWT.create(PingService.class);
-            async.ping(new AsyncCallback<AbstractPhoneBill>() {
 
-                public void onFailure(Throwable ex) {
-                    Window.alert(ex.toString());
-                }
+      VerticalPanel panel2      = new VerticalPanel();
 
-                public void onSuccess(AbstractPhoneBill phonebill) {
-                    StringBuilder sb = new StringBuilder(phonebill.toString());
-                    Collection<AbstractPhoneCall> calls = phonebill.getPhoneCalls();
-                    for (AbstractPhoneCall call : calls) {
-                        sb.append(call);
-                        sb.append("\n");
-                    }
-                    Window.alert(sb.toString());
-                }
-            });
-        }
-    });
-        */
+      VerticalPanel panel3      = new VerticalPanel();
 
-      VerticalPanel panel2 = new VerticalPanel();
-      //panel2.setSpacing(10);
-      panel2.getElement().setAttribute("padding", "10");
+      //panel3.add(addSearchButton("Search Calls"));
+      //HTML html = new HTML("<div id='search'></div>");
+      //panel3.add(html);
+
+
+
       panel2.getElement().setAttribute("align", "center");
+      panel3.getElement().setAttribute("align", "center");
+
       panel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+      panel3.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
-      RootPanel rootPanel = RootPanel.get();
-      panel2.add(caller);
+      RootPanel rootPanel = RootPanel.get("gwtcontainer");
+      RootPanel rootPanel2 = RootPanel.get("search");
 
-
-      rootPanel.get("gwtcontainer").add(setVerticalPanel(panel2));
-
+      rootPanel.add(setVerticalPanel(panel2));
+      rootPanel2.add(setSearchPanel(panel3));
 
   }
 
 
     public static TextBox addTextBox(final TextBox textbox,  String text){
-
         textbox.setText(text);
         textbox.addClickHandler(new ClickHandler() {
             @Override
@@ -96,31 +85,30 @@ public class PhoneBillGwt implements EntryPoint {
 
     public static Label addLabel(String text) {
         Label label =  new Label(text);
-        label.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+        label.getElement().getStyle().setPadding(10, Unit.PX);
+        //label.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
         return label;
     }
 
     public static HorizontalPanel addHorizontalTextBox(TextBox box, String labelText) {
         HorizontalPanel panel = new HorizontalPanel();
-        DialogBox help = new DialogBox();
-        panel.setSpacing(5);
-
+        panel.setVerticalAlignment(VerticalPanel.ALIGN_MIDDLE);
         panel.add(addLabel(labelText));
+        panel.getElement().getStyle().setPadding(10, Unit.PX);
+        //panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
         panel.add(box);
-        panel.add(help);
+        //panel.setSpacing(20);
         return panel;
 
     }
 
     public static HorizontalPanel addHorizontalTimeTextBox(TextBox box, String labelText, ToggleButton ampm) {
         HorizontalPanel panel = new HorizontalPanel();
-        DialogBox help = new DialogBox();
-        panel.setSpacing(5);
-
+        panel.setVerticalAlignment(VerticalPanel.ALIGN_MIDDLE);
         panel.add(addLabel(labelText));
+        panel.getElement().getStyle().setPadding(10, Unit.PX);
         panel.add(box);
         panel.add(ampm);
-        panel.add(help);
         return panel;
 
     }
@@ -181,15 +169,6 @@ public class PhoneBillGwt implements EntryPoint {
                 final String start = startAmPm;
                 final String end = endAmPm;
 
-                /*
-                ArrayList<String> inputs = new ArrayList<>();
-                inputs.add(customerNameInput);
-                inputs.add(callerInput);
-                inputs.add(calleeInput);
-                inputs.add(startDateInput + " " + startTimeInput + " " + startAmPm);
-                inputs.add(endDateInput + " " + endTimeInput + " " + endAmPm);
-                */
-
                 String startTimeString = startDateInput + " " + startTimeInput + " " + startAmPm;
                 String endTimeString = endDateInput + " " + endTimeInput + " " + endAmPm;
 
@@ -197,7 +176,6 @@ public class PhoneBillGwt implements EntryPoint {
                 PingServiceAsync pinger = GWT.create(PingService.class);
                 boolean checkArgs = validateCall(customerNameInput, callerInput, calleeInput,
                         startDateInput, startTimeInput, endDateInput, endTimeInput);
-                //boolean checkArgs = false;
 
                 if (checkArgs) {
                     PhoneCall addCall = new PhoneCall(callerInput, calleeInput, startTimeString, endTimeString);
@@ -230,13 +208,14 @@ public class PhoneBillGwt implements EntryPoint {
         return addCall;
     }
 
-    public static Button addSearchButton(String buttonName, final String windowAlert) {
+
+    public static Button addSearchButton(String buttonName) {
         Button searchCall = new Button(buttonName);
 
         searchCall.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
-                Window.alert(windowAlert);
+                Window.alert("Here!");
             }
         });
         return searchCall;
@@ -253,8 +232,17 @@ public class PhoneBillGwt implements EntryPoint {
         panel2.add(addHorizontalTextBox(endDate, "End Date"));
         panel2.add(addHorizontalTimeTextBox(endTime, "End Time", endAM));
         panel2.add(addCallButton("Add Call"));
-        panel2.add(addSearchButton("Search", "Searcher"));
+        return panel2;
+    }
 
+    public static VerticalPanel setSearchPanel(VerticalPanel panel2){
+        panel2.setSpacing(10);
+        panel2.add(addHorizontalTextBox(searchCustomer, "Customer Name"));
+        panel2.add(addHorizontalTextBox(searchStartDate, "Start Date"));
+        panel2.add(addHorizontalTimeTextBox(searchStartTime, "Start Time", startAM));
+        panel2.add(addHorizontalTextBox(searchEndDate, "End Date"));
+        panel2.add(addHorizontalTimeTextBox(searchEndTime, "End Time", endAM));
+        panel2.add(addCallButton("Add Call"));
         return panel2;
     }
 
