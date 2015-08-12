@@ -8,7 +8,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script language="javascript" src="phonebill/phonebill.nocache.js" type="text/javascript"></script>
-    <!--<link rel="stylesheet" href="/client/bootstrap.css">-->
     <style type="text/css"></style>
 </head>
 <body>
@@ -42,7 +41,7 @@
       <div class="tab-content">
           <div id="home" class="tab-pane fade in active">
               <br>
-              <h3 align="center">Try adding a phone call!</h3>
+              <h3 align="center">Add a phone call!</h3>
               <br>
               <div id="gwtcontainer"></div>
               <br>
@@ -59,16 +58,74 @@
           </div>
 
           <div id="menu2" class="tab-pane fade">
-              <h3 align="center">README</h3>
+              <header class="page-header">
+                  <h1 class="page-title" align="center">README</h1>
+              </header>
+              <br>
+              <p align="center">
+
+                  Phone Bill Application version 5.0
+                  Developed by Jon-Erik Svenson for CS410J - Advanced Java Programming <br><br>
+
+                  This project is designed to familiarize us with Google Web Toolkit by
+                  creating a GUI in Java. A user can create a phone call validated by
+                  the program, which creates a phone bill for that user. The program
+                  keeps track of all existing phone bills and allows the user to search
+                  for calls that happened between certain dates. Other functionality
+                  includes sorting phone calls for the user, removing equal phone calls,
+                  printing the calls in a 'pretty' format, and providing helpful content. <br><br>
+
+                  Styling for this webpage was made with bootstrap and font-awesome,
+                  the credit for which belongs to the following open-source licences: <br><br>
+
+                  * Bootstrap v3.0.3 (http://getbootstrap.com)
+                  * Copyright 2013 Twitter, Inc.
+                  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE) <br><br>
+
+                  *  Font Awesome 4.3.0 by @davegandy - http://fontawesome.io - @fontawesome
+                  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License) <br><br>
+
+              </p>
           </div>
 
 
           <div id="menu3" class="tab-pane fade">
-              <h3 align="center">Help</h3>
+              <header class="page-header">
+                  <h1 class="page-title" align="center">Help</h1>
+              </header>
+              <br>
+              <p><strong>Need help using this GUI? You've come to the right place...</strong></p>
+              <br>
+              <h3>Adding a phone call:</h3>
+              <p>Customer name - Any string of characters, as long as it's not empty<br>
+               Caller number - The number that the call came from, in XXX-XXX-XXXX format, ex 645-432-2343<br>
+               Callee number - The number that was called, in the same format<br>
+               Start date    - A valid date, in MM/DD/YYYY form, ex. 11/07/1990<br>
+               End date      - Also in MM/DD/YYYY form<br>
+               Start time    - A valid time in 12 hour format, formatted XX:XX, ex. 3:30 or 12:21<br>
+               End time      - also in 12 hour format, XX:XX<br>
+               AM / PM       - Use the toggle button to specify AM or PM</p>
+
+              <p>Adding a phone call will first validate that the inputs are correct, and then<br>
+              add the information to a phone bill for you. If the customer name is new, a new<br>
+              bill will be created.</p>
+              <h3>
+                Searching a phone call:
+              </h3>
+              <p>
+                  ** Arguments should be in the same format as specified above **
+              </p>
+              <p>Provide a customer name, start and end times, and a window will pop up with<br>
+              all calls found that fall within the time frame provided.</p>
+              <h3>
+                Other information:
+              </h3>
+
+              <p>Calls that have the same customer name, caller number, and start time are considered<br>
+              equal, and thus aren't added to the phone bill. The pretty button shows their bill<br>
+              in a more readable format.</p>
           </div>
-
-
-     </div>
-  </div>
+      </div>
+    </div>
   </body>
 </html>

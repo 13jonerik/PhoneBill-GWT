@@ -345,7 +345,7 @@ public class PhoneBillGwt implements EntryPoint {
 
         return check;
     }
-    
+
     public static boolean searcher(AbstractPhoneCall call, Date start, Date end) {
         return call.getStartTime().after(start) && call.getEndTime().before(end);
     }
