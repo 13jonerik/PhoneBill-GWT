@@ -2,8 +2,6 @@ package edu.pdx.cs410J.jonerik.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -12,9 +10,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import edu.pdx.cs410J.AbstractPhoneCall;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Date;
 
 /**
  * A basic GWT class that makes sure that we can send an Phone Bill back from the server
@@ -151,7 +149,7 @@ public class PhoneBillGwt implements EntryPoint {
 
                 String startTimeString = startDateInput + " " + startTimeInput + " " + startAmPm;
                 String endTimeString = endDateInput + " " + endTimeInput + " " + endAmPm;
-                
+
                 boolean checkArgs = validateCall(customerNameInput, callerInput, calleeInput,
                         startDateInput, startTimeInput, endDateInput, endTimeInput);
 
@@ -178,7 +176,6 @@ public class PhoneBillGwt implements EntryPoint {
 
                         }
                     });
-
                 }
             }
         });
@@ -348,16 +345,7 @@ public class PhoneBillGwt implements EntryPoint {
 
         return check;
     }
-
-    public static TextBox getUserInput(String box) {
-        return TextBox.wrap(getElementId(box));
-    }
-
-    private static Element getElementId(String box){
-        return Document.get().getElementById(box);
-    }
-
-
+    
     public static boolean searcher(AbstractPhoneCall call, Date start, Date end) {
         return call.getStartTime().after(start) && call.getEndTime().before(end);
     }
