@@ -70,9 +70,9 @@ public class PhoneBillGwt implements EntryPoint {
       panel3.getElement().setAttribute("align", "center");
       panel4.getElement().setAttribute("align", "center");
 
-      panel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-      panel3.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-      panel4.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+      panel2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+      panel3.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+      panel4.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 
       RootPanel rootPanel   = RootPanel.get("gwtcontainer");
       RootPanel rootPanel2  = RootPanel.get("search");
@@ -86,7 +86,9 @@ public class PhoneBillGwt implements EntryPoint {
 
 
     public static TextBox addTextBox(final TextBox textbox,  String text){
-        textbox.setText(text);
+        textbox.getElement().setAttribute("class", "form-control");
+        textbox.getElement().setAttribute("placeholder", text);
+        //textbox.setText(text);
         textbox.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
@@ -106,7 +108,7 @@ public class PhoneBillGwt implements EntryPoint {
     public static HorizontalPanel addHorizontalTextBox(TextBox box, String labelText) {
         HorizontalPanel panel = new HorizontalPanel();
         panel.setVerticalAlignment(VerticalPanel.ALIGN_MIDDLE);
-        panel.add(addLabel(labelText));
+        //panel.add(addLabel(labelText));
         panel.getElement().getStyle().setPadding(10, Unit.PX);
         panel.add(box);
         return panel;
@@ -116,9 +118,10 @@ public class PhoneBillGwt implements EntryPoint {
     public static HorizontalPanel addHorizontalTimeTextBox(TextBox box, String labelText, ToggleButton ampm) {
         HorizontalPanel panel = new HorizontalPanel();
         panel.setVerticalAlignment(VerticalPanel.ALIGN_MIDDLE);
-        panel.add(addLabel(labelText));
+        //panel.add(addLabel(labelText));
         panel.getElement().getStyle().setPadding(10, Unit.PX);
         panel.add(box);
+        ampm.getElement().setAttribute("class", "btn");
         panel.add(ampm);
         return panel;
 
@@ -126,6 +129,7 @@ public class PhoneBillGwt implements EntryPoint {
 
     public static Button addCallButton(String buttonName) {
         Button addCall = new Button(buttonName);
+        addCall.getElement().setAttribute("class", "btn btn-action");
         //validate the arguments, throw errors if not valid
 
         addCall.addClickHandler(new ClickHandler() {
