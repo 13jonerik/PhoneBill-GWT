@@ -129,7 +129,7 @@ public class PhoneBillGwt implements EntryPoint {
 
     public static Button addCallButton(String buttonName) {
         Button addCall = new Button(buttonName);
-        addCall.getElement().setAttribute("class", "btn btn-action");
+        addCall.getElement().setAttribute("class", "btn btn-warning");
         //validate the arguments, throw errors if not valid
 
         addCall.addClickHandler(new ClickHandler() {
@@ -199,6 +199,7 @@ public class PhoneBillGwt implements EntryPoint {
 
     public static Button addSearchButton(String buttonName) {
         Button searchCall = new Button(buttonName);
+        searchCall.getElement().setAttribute("class", "btn btn-warning");
 
         searchCall.addClickHandler(new ClickHandler() {
             @Override
@@ -277,6 +278,8 @@ public class PhoneBillGwt implements EntryPoint {
 
     public static Button addPrettyButton(String buttonName){
         Button prettyButton = new Button(buttonName);
+        prettyButton.getElement().setAttribute("class", "btn btn-warning");
+
         prettyButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
