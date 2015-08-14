@@ -45,8 +45,8 @@ public class PhoneBillGwt implements EntryPoint {
   public void onModuleLoad() {
 
       addTextBox(customerName, "Name on Phone Bill");
-      addTextBox(caller, "Enter Caller Name");
-      addTextBox(callee, "Enter Callee Name");
+      addTextBox(caller, "Enter Caller Number");
+      addTextBox(callee, "Enter Callee Number");
       addTextBox(startDate, "MM/DD/YYYY");
       addTextBox(endDate, "MM/DD/YYYY");
       addTextBox(startTime, "HH:MM");
