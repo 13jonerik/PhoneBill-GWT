@@ -1,4 +1,4 @@
-# phonebill-gwt
+# PhoneBill in GWT
 Project 5 - Full Featured GUI
 
 This project is the final deliverable for CS410J - Advanced Java Programming @ PSU.
